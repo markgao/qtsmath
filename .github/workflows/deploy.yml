@@ -1,0 +1,75 @@
+name: Deploy mdBook to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Allow the workflow to publish to GitHub Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run
+# in-progress and latest queued. Do NOT cancel in-progress runs so that
+# production deployments are allowed to complete.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  MDBOOK_VERSION: "0.4.40"
+  MDBOOK_KATEX_VERSION: "0.9.0"
+
+jobs:
+  build:
+    name: Build book
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Fast binary installs (no compilation) for pinned tool versions.
+      - name: Install mdbook + mdbook-katex
+        uses: taiki-e/install-action@v2
+        with:
+          tool: mdbook@${{ env.MDBOOK_VERSION }},mdbook-katex@${{ env.MDBOOK_KATEX_VERSION }}
+
+      - name: Report versions
+        run: |
+          mdbook --version
+          mdbook-katex --version
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build
+        run: mdbook build
+
+      # Borrowed from rust-lang/book CI: fail the build on broken links.
+      # 404.html intentionally uses a root-relative '/' link that only
+      # resolves on the live server, so it is excluded from the local check.
+      - name: Check for broken links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --offline --exclude-path 'book/404.html' 'book/**/*.html'
+          fail: true
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: book
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v5

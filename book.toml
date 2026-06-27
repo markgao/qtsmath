@@ -1,0 +1,8 @@
+[book]
+title = "Quantitative Trading from Scratch – Math"
+authors = ["Mark Gao"]
+
+[preprocessor.katex]
+
+[output.html.search]
+use-boolean-and = true
