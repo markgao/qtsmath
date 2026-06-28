@@ -21,6 +21,16 @@
 
 - [概率分布与肥尾风险 Distributions and Fat-tails](ch02-00-distributions-and-fat-tails.md)
   - [正态分布 Normal Distribution](ch02-01-normal-distribution.md)
+  - [概率密度函数 PDF Probability Density Function](ch02-02-pdf.md)
+  - [累积分布函数 CDF Cumulative Distribution Function](ch02-03-cdf.md)
+  - [分位数 Quantile](ch02-04-quantile.md)
+  - [68-95-99.7 法则 The 68-95-99.7 Rule](ch02-05-empirical-rule.md)
+  - [对数正态分布 Lognormal Distribution](ch02-06-lognormal-distribution.md)
+  - [偏度 Skewness](ch02-07-skewness.md)
+  - [峰度 Kurtosis](ch02-08-kurtosis.md)
+  - [超额峰度 Excess Kurtosis](ch02-09-excess-kurtosis.md)
+  - [肥尾 Fat Tails](ch02-10-fat-tails.md)
+  - [学生 t 分布 Student's t-distribution](ch02-11-students-t.md)
 
 - [统计推断 Statistical Inference](ch03-00-statistical-inference.md)
 

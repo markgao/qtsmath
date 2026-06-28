@@ -1,0 +1,1 @@
+# 68-95-99.7 法则 The 68-95-99.7 Rule (Empirical Rule)
